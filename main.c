@@ -80,28 +80,23 @@ int main(void) {
     int i;
     int j;
     int k = 0;
-    int zeros_counter = 0;
+    int zeros_counter;
     for (i = 0; i < total_lines; i++) {
         for (j = 0; j < max_vertices; j++) {
-            switch (imatrix[i][j]) {
-                case '0':
-                    zeros_counter++;
-                case '1': {
-                    k = i + 1;
-                    for (; k <
-                           total_lines; k++) { //finding pair to imatrix[i][j], need to understand if there is a loop or lone vertex
-                        if (imatrix[k][j] == '1') fprintf(gfile, "%i -- %i\n", i + 1, k + 1);
-                        else zeros_counter++;
-                    }
+            if (imatrix[i][j] == '1') {
+                k = i + 1;
+                for (; k <
+                       total_lines; k++) { //finding pair to imatrix[i][j], need to understand if there is a loop or lone vertex
+                    zeros_counter = 0;
+                    if (imatrix[k][j] == '1') {
+                        fprintf(gfile, "%i -- %i\n", i + 1, k + 1);
+                    } else zeros_counter++;
+                    if (zeros_counter == total_lines - i)
+                        fprintf(gfile, "%d\n", i);
                 }
             }
         }
     }
-            //if (imatrix[i][j] == '1') {
-                 /*   else zeros_counter++;
-                    if (zeros_counter == total_lines-i)
-                        fprintf(gfile, "%d\n", i);*/
-              //  }
             /*if (imatrix[i][j] == '0') {
                 int p = i + 1;
                 for (; p < total_lines; p++) {
