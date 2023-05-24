@@ -1,0 +1,3 @@
+C:/Users/natal/Desktop/flita/newT2/cmake-build-debug/CMakeFiles/newT2.dir
+C:/Users/natal/Desktop/flita/newT2/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/natal/Desktop/flita/newT2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
