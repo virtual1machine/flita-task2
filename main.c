@@ -73,7 +73,7 @@ int main(void) {
         return 1;
     }
 
-    //incidence matrix to .dot file
+    //incidence matrix to .dot
     fputs("graph {\n\n", gfile);
     int edges_num = (int) strlen(imatrix[0]) - 1;
     int vertex_num = (int) total_lines;
