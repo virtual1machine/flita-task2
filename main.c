@@ -73,45 +73,38 @@ int main(void) {
         return 1;
     }
 
-    fputs("graph {\n\n", gfile);
     //incidence matrix to .dot file
-    int max_vertices = strlen(imatrix[0]);
+    fputs("graph {\n\n", gfile);
+    int edges_num = (int) strlen(imatrix[0]) - 1;
+    int vertex_num = (int) total_lines;
 
-    int i;
-    int j;
-    int k = 0;
-    int zeros_counter;
-    for (i = 0; i < total_lines; i++) {
-        for (j = 0; j < max_vertices; j++) {
-            if (imatrix[i][j] == '1') {
-                k = i + 1;
-                for (; k <
-                       total_lines; k++) { //finding pair to imatrix[i][j], need to understand if there is a loop or lone vertex
-                    zeros_counter = 0;
-                    if (imatrix[k][j] == '1') {
-                        fprintf(gfile, "%i -- %i\n", i + 1, k + 1);
-                    } else zeros_counter++;
-                    if (zeros_counter == total_lines - i)
-                        fprintf(gfile, "%d\n", i);
-                }
+    bool *isConnected;
+    isConnected = (bool *) calloc(vertex_num, sizeof(bool));
+    for (int i = 0; i < edges_num; i++) {
+        int buff[2];
+        int counter = 0;
+        for (int j = 0; j < vertex_num; j++) {
+            if (imatrix[j][i] == '1') {
+                isConnected[j] = true;
+                buff[counter] = j;
+                counter++;
             }
         }
+        if (counter > 0) {
+            if (counter == 1)
+                buff[1] = buff[0];
+            fprintf(gfile, "%d -- %d\n", buff[0], buff[1]);
+        }
     }
-            /*if (imatrix[i][j] == '0') {
-                int p = i + 1;
-                for (; p < total_lines; p++) {
-                    zeros_counter = 0;
-                    if (imatrix[p][j] == '1') {
-                        fprintf(gfile, "%i\n", i + 1);
-                    }
-                }
-            */
-                //if (zeros_counter == (total_lines - 1)) { //here is the loop
-                //    fprintf(gfile, "%i -- %i\n", i + 1, i + 1);
-                //}
+    for (int k = 0; k < vertex_num; k++) {
+        if (!isConnected[k])
+            fprintf(gfile, "%d\n", k);
+    }
     fprintf(gfile, "\n}");
-    fclose(gfile);
 
+
+
+    fclose(gfile);
     system("dot -Tjpg C://Users//natal//Desktop//flita//newT2//graph.dot -o cool_graph.png");
     system("C://Users//natal//Desktop//flita//newT2//cmake-build-debug//cool_graph.png");
 }
