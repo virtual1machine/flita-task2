@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <windows.h>
 
 // The sizes for each "memory aallocation increase" of both the arrays of
 // chars storing each line (MORE_CHARS), and the array of pointers to chars
@@ -73,6 +74,7 @@ int main(void) {
         return 1;
     }
 
+    int connection_counter = 0;
     //incidence matrix to .dot
     fputs("graph {\n\n", gfile);
     int edges_num = (int) strlen(imatrix[0]) - 1;
@@ -94,6 +96,7 @@ int main(void) {
             if (counter == 1)
                 buff[1] = buff[0];
             fprintf(gfile, "%d -- %d\n", buff[0], buff[1]);
+            connection_counter++;
         }
     }
     for (int k = 0; k < vertex_num; k++) {
@@ -101,10 +104,22 @@ int main(void) {
             fprintf(gfile, "%d\n", k);
     }
     fprintf(gfile, "\n}");
-
-
-
     fclose(gfile);
+
     system("dot -Tjpg C://Users//natal//Desktop//flita//newT2//graph.dot -o cool_graph.png");
     system("C://Users//natal//Desktop//flita//newT2//cmake-build-debug//cool_graph.png");
+
+    /* Theorem
+     * every graph with n vertices and more than (n-1)(n-2)/2 edges is connected
+     */
+
+    if(edges_num > ((vertex_num - 1) * (vertex_num - 2)) / 2)
+        MessageBox(0,"Graph is connected", "Theorem", MB_OK );
+    else
+        MessageBox(0,"Graph is not connected", "Theorem", MB_OK );
+
+
+
+    printf("%i", connection_counter);
+
 }
