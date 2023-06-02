@@ -4,9 +4,7 @@
 #include <string.h>
 #include <windows.h>
 
-// The sizes for each "memory aallocation increase" of both the arrays of
-// chars storing each line (MORE_CHARS), and the array of pointers to chars
-// pointing to the strings/lines (MORE_LINES).
+
 #define MORE_LINES 1024
 #define MORE_CHARS 1024
 
